@@ -239,3 +239,5 @@ $cpCfg['cp.availablePlugins'] = array(
 
 
 return $cpCfg;
+
+//syed
