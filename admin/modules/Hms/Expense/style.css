@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.m-hms_expense .cpSearch input[type="text"]{
+    max-width: 200px !important;
+    width: 100px !important;
+}
+
+.cpSearch .dateRange {
+    width: 400px !important;
+}

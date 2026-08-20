@@ -1,0 +1,195 @@
+@charset "UTF-8";
+
+@media all
+{
+    a.billsLinkedAfterManualStock b {
+        font-size: 16px !important;
+        color: #000 !important;
+        text-decoration: underline !important;
+        cursor: pointer !important;
+    }
+
+    .m-tradingin_inventory.v-list tr.odd:hover,
+    .m-tradingin_inventory.v-list tr.even:hover,
+    .m-tradingin_inventory.v-list tr.current:hover{
+        background-color: #0062cc !important;
+        background: #0062cc !important;
+        color: #FFFFFF !important;
+    }
+
+    .m-tradingin_inventory.v-list tr.odd:hover a,
+    .m-tradingin_inventory.v-list tr.even:hover a,
+    .m-tradingin_inventory.v-list tr.current:hover a{
+        color: #FFFFFF !important;
+    }
+
+	.c50l {
+	    width: 40%;
+	}
+
+	.c50r{
+		width: 60%;
+	}
+
+    .m-tradingin_inventory .toggle {
+        display:block;
+    }
+
+    .m-tradingin_inventory .yform{
+        background-color: #fff;
+        border: 0;
+        padding: 0;
+    }
+
+    .m-tradingin_inventory .c50l,
+    .m-tradingin_inventory .c50r {
+        width: 100%;
+    }
+
+    .m-tradingin_inventory .ym-columnar .ym-fbox-text label,
+    .m-tradingin_inventory .ym-columnar .ym-fbox-select label,
+    .m-tradingin_inventory #frmEdit .type-text label,
+    .m-tradingin_inventory #frmEdit .type-select label {
+        width: 100%;
+    }
+
+    .m-tradingin_inventory #frmEdit .creModdate .type-text label{
+        width: 20%;
+    }
+
+    .m-tradingin_inventory .yform.edit .type-text div.txt, 
+    .m-tradingin_inventory .yform.edit .type-text div.txt, 
+    .m-tradingin_inventory .yform.edit .type-select div.txt, 
+    .m-tradingin_inventory .yform.edit .form-row-wrapper div.txt{
+    	margin-left: 0 !important;
+    }
+
+    .rightPanel .header{
+    	background-color: #FFFFFF;
+    }
+
+    .poDisplay {
+	    background-color: #FFFFFF;
+	}
+
+    .thinlist.stockDetailsTable {
+        border: 2px solid #23B7E5 !important;
+    }
+
+    .thinlist.stockDetailsTable th, .thinlist.stockDetailsTable td {
+        font-size: 18px !important;
+        font-weight: bold;
+    }
+
+    .linkPortalWrapper.panel{
+        border:none;
+    }
+
+    .RightPanelHeading {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .orderRightPanelTr{
+        background-color: #8EFFFF;
+    }
+
+    .AdjustStockInventoryEdit,
+    .DeductStockInventoryEdit,
+    .ManualStockInventory,
+    .ExpiredStockInventoryEdit,
+    .row_med_purch_qty input#fld_med_purch_qty,
+    .row_current_stock input#fld_current_stock,
+    .row_exp_qty input#fld_exp_qty {
+        width: 52px;
+        font-size: 16px;
+        padding: 4px;
+        margin-right: 4px;
+    }
+
+    .row_med_purch_qty input#fld_med_purch_qty,
+    .row_exp_qty input#fld_exp_qty {
+        color:#000000;
+    }
+
+    .AdjustStockInventoryEditSaveBtn,
+    .DeductStockInventoryEditSaveBtn,
+    .viewAllUpdatedAdjustStockHistory,
+    .viewAllUpdatedExpiredHistory,
+    .ExpiredStockInventoryEditSaveBtn,
+    .overallStockForLocationWise .saveCurrentStock {
+        padding: 4px 6px !important;
+        cursor: pointer;
+    }
+
+    .addStockInventory,
+    .deductStockInventory {
+        cursor: pointer;
+    }
+
+    .AdjustStockInventoryEdit,
+    .DeductStockInventoryEdit,
+    .AdjustStockInventoryEditSaveBtn,
+    .DeductStockInventoryEditSaveBtn,
+    .row_current_stock,
+    .row_med_purch_qty,
+    .row_exp_qty {
+        float:left;
+    }
+
+    .tradingin_inventory_purchaseOrderLink .panel-body {
+        padding: 1px !important;
+    }
+
+    .tradingin_inventory_purchaseOrderLink .panel-heading {
+        padding: 0px 12px !important;
+    }
+
+    .tradingin_inventory_purchaseOrderLink div.toggle {
+        margin: 3px 0 0 10px !important;
+    }
+
+    a.poLinked,
+    a.stockTransferredIn,
+    a.billsLinked,
+    a.stockTransferredOut,
+    a.batchStock,
+    a.manualStock {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    a.redColor {
+        color : red !important;
+    }
+
+    .text-size-18px {
+        font-size: 18px !important;
+    }
+
+    .blinking {
+        animation:blinkingText 1.5s infinite;
+    }
+
+    .btn.addStockInventory ,
+    .btn.deductStockInventory {
+        padding: 2px 4px !important;
+    }
+
+    .addStockWidth{
+        width: 120px;
+    }
+
+    @keyframes blinkingText {
+        0%   {color: #2a6496;}
+        25%  {color: #ff0000;}
+        50%  {color: #41c6ab;}
+        75%  {color: #ff0000;}
+        100% {color: #2a6496;}
+    }
+
+    .tradingin_inventory_purchaseOrderLink table.thinlist th,
+    .tradingin_inventory_purchaseOrderLink table.thinlist td {
+        padding: 5px !important;
+    }
+}

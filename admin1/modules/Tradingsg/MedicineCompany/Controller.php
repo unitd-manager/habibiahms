@@ -1,0 +1,5 @@
+<?
+class CPL_Admin_Modules_Tradingsg_MedicineCompany_Controller extends CP_Common_Lib_ModuleControllerAbstract
+{
+
+}

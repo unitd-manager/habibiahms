@@ -1,0 +1,7 @@
+<?
+class CPL_Admin_Modules_Tradingsg_Dashboard_Controller extends CP_Common_Lib_ModuleControllerAbstract
+{
+    function getUpdateOverallStats() {
+        return $this->view->getUpdateOverallStats();
+    }
+}

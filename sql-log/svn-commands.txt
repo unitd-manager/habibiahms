@@ -1,0 +1,80 @@
+USE THIS COMMAND TO TRANSFER LOCAL FILES FROM TO DEV/TEST :
+==========================================================
+/utils/export-from-git.sh --repo habibiahms --dest /home/habibiahms/public_html/
+
+USE THIS COMMAND TO TRANSFE RMASTER FILES FROM TO DEV/TEST :
+===========================================================
+/utils/export-from-git.sh --repo cmsPilot --folder v3.0/CP/admin/modules/Hms/ --dest /home/cmsPilot/
+
+/utils/export-from-git.sh --repo cmsPilot --folder v3.0/CP/admin/themes/Angle/ --dest /home/cmsPilot/
+
+/utils/export-from-git.sh --repo cmsPilot --folder v3.0/library/jss/bootstrap/ --dest /home/cmsPilot/
+
+/utils/export-from-git.sh --repo cmsPilot --folder v3.0/CP/common/lib/ --dest /home/cmsPilot/
+
+
+USE THIS COMMAND TO MOVE MASTER(V3) FILES DEV/TEST TO LIVE :
+===========================================================
+rsync --verbose  --progress --stats --compress \
+      --recursive --times --perms --links \
+       /home/habibiahms/public_html/ \
+      root@5.189.190.48:/home/habibiahms/public_html/
+
+Password: m3U6T6GC4SK79K
+
+
+Steps to export and import database from Pac Server 3 To Pac Server 2:
+======================================================================
+
+[Login to pac server 3 in mremote and run the following]:
+=========================================================
+Mysql export database on file on pac server 3
+===============================================
+mysqldump -u root -p habibiahms > /root/BackupDB/habibiahms.sql
+
+Pac server 3 to pac server 2 Db Backup file sync
+===============================================
+rsync --verbose  --progress --stats --compress \
+      --recursive --times --perms --links \
+       /root/BackupDB/ \
+      root@43.228.126.182:/home/BackupDB/
+
+Password: 18P_M$6t2E]$DvV
+
+
+[Login to pac server 2 in mremote and run the following]:
+=========================================================
+Mysql inport on file on pac server 2:
+=====================================
+1. mysql -u root -p
+   Password: mysqltest786
+2. use habibiahms;
+3. SET autocommit=0; source /home/BackupDB/habibiahms.sql; COMMIT;
+
+
+Steps to database from Pac Server 2 To Pac Server 3:
+====================================================
+
+[Login to pac server 2 in mremote and run the following]:
+=========================================================
+Mysql export database on file on pac server 2
+=============================================
+mysqldump -u root -p habibiahms > /home/BackupDB/habibiahms.sql
+
+Pac server 2 to pac server 3 Db Backup file Sync
+===============================================
+rsync --verbose  --progress --stats --compress \
+      --recursive --times --perms --links \
+       /home/BackupDB/ \
+      root@43.228.125.38:/root/BackupDB/
+
+Password: ENh1@fNX0S
+
+[Login to pac server 3 in mremote and run the following]:
+=========================================================
+Mysql inport on file on pac server 3:
+=====================================
+1. mysql -u root -p
+   Password: usspac5123
+2. use habibiahms;
+3. SET autocommit=0; source /home/BackupDB/habibiahms.sql; COMMIT;

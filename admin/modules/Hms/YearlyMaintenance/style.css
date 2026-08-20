@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+@media all
+{
+    .m-hms_yearlyMaintenance .toggle,
+    .m-hms_renewal .toggle {
+        display:block;
+    }
+
+    .m-hms_yearlyMaintenance .yform,
+    .m-hms_renewal .yform{
+        background-color: #fff;
+        border: 0;
+        padding: 0;
+    }
+
+    .m-hms_yearlyMaintenance .c50l,
+    .m-hms_yearlyMaintenance .c50r,
+    .m-hms_renewal .c50l,
+    .m-hms_renewal .c50r {
+        width: 100%;
+    }
+
+    .m-hms_yearlyMaintenance .ym-columnar .ym-fbox-text label,
+    .m-hms_yearlyMaintenance .ym-columnar .ym-fbox-select label,
+    .m-hms_yearlyMaintenance #frmEdit .type-text label,
+    .m-hms_yearlyMaintenance #frmEdit .type-select label,
+    .m-hms_renewal .ym-columnar .ym-fbox-text label,
+    .m-hms_renewal .ym-columnar .ym-fbox-select label,
+    .m-hms_renewal #frmEdit .type-text label,
+    .m-hms_renewal #frmEdit .type-select label {
+        width: 100%;
+    }
+
+    .m-hms_yearlyMaintenance #frmEdit .creModdate .type-text label,
+    .m-hms_renewal #frmEdit .creModdate .type-text label{
+        width: 20%;
+    }
+
+    .m-hms_yearlyMaintenance  .linkPortalWrapper div.header,
+    .m-hms_yearlyMaintenance  .linkPortalWrapper .linkPortalDataWrapper th,
+    .m-hms_renewal  .linkPortalWrapper div.header,
+    .m-hms_renewal  .linkPortalWrapper .linkPortalDataWrapper th{
+        background-color: #F8F8F8;
+    }
+
+
+}

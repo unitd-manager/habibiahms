@@ -1,0 +1,7 @@
+AuthName "habibiahms1.cubosale.in statistics"
+AuthType Basic
+AuthUserFile /home/habibiahms/.stats-htpasswd
+require valid-user
+<Files .stats-htpasswd>
+deny from all
+</Files>

@@ -1,0 +1,636 @@
+<?
+class CPL_Admin_Modules_Hms_Attendance_Model extends CP_Common_Lib_ModuleModelAbstract
+{
+
+function getSQL() {
+    $fn = Zend_Registry::get('fn');
+
+    $searchMonth = $fn->getReqParam('search_month');
+    $searchYear  = $fn->getReqParam('search_year');
+    $employee_id = $fn->getReqParam('employee_id');
+
+    $dateFilter = '';
+    $employeeFilter = '';
+
+    // Filter by month and year
+    if ($searchMonth && $searchYear) {
+        $monthStr = str_pad($searchMonth, 2, '0', STR_PAD_LEFT);
+        $dateFilter = " AND DATE_FORMAT(at.record_date, '%Y-%m') = '{$searchYear}-{$monthStr}'";
+    }
+
+    // Filter by employee_id
+    if (!empty($employee_id)) {
+        $employeeFilter = " AND at.employee_id = '{$employee_id}'";
+    }
+
+    $SQL = "
+        SELECT a.*
+             , at.record_date
+             , at.attendance_status
+             ,at.daily_attendance_id
+        FROM employee a
+        LEFT JOIN daily_attendance at
+          ON at.employee_id = a.employee_id
+          {$dateFilter}
+        {$employeeFilter}
+    ";
+
+    return $SQL;
+}
+
+
+function setSearchVar() {
+    $tv = Zend_Registry::get('tv');
+    $fn = Zend_Registry::get('fn');
+    $searchVar = Zend_Registry::get('searchVar');
+    $cpCfg = Zend_Registry::get('cpCfg');
+    $searchVar->mainTableAlias = 'a';
+
+    $attendance_id    = $fn->getReqParam('attendance_id');
+    $employee_id      = $fn->getReqParam('employee_id');
+    $special_search   = $fn->getReqParam('special_search');
+    $attendanceDate1  = $fn->getReqParam('attendanceDate1');
+    $attendanceDate2  = $fn->getReqParam('attendanceDate2');
+    $searchMonth      = $fn->getReqParam('search_month');
+    $searchYear       = $fn->getReqParam('search_year');
+
+    $userGroupID      = $fn->getSessionParam('userGroupID');
+    $staffIDS         = $fn->getSessionParam('staff_id');
+
+    if ($attendance_id != '' ) {
+        $searchVar->sqlSearchVar[] = "a.attendance_id = '{$attendance_id}'";
+    } else if ($tv['record_id'] != '' ) {
+        $searchVar->sqlSearchVar[] = "a.attendance_id = '{$tv['record_id']}'";
+    } else {
+      
+       
+        $searchVar->sqlSearchVar[] = "a.position = 'Nurse'";
+
+        // if ($tv['keyword'] != "") {
+        //     $keyword = $tv['keyword'];
+        //     $searchVar->sqlSearchVar[] = "(
+        //         s.first_name LIKE '%{$keyword}%'
+        //      OR s.last_name  LIKE '%{$keyword}%'
+        //      OR a.notes      LIKE '%{$keyword}%'
+        //     )";
+        // }
+
+        $searchVar->sortOrder = "a.employee_id DESC";
+    }
+}
+
+
+   function getSQLOld() {
+
+        $SQL = "
+        SELECT a.*
+              ,TIME_FORMAT(a.time_in_day_shift, '%H:%i') time_in_day_shift_formatted
+              ,TIME_FORMAT(a.leave_time_day_shift, '%H:%i') leave_time_day_shift_formatted
+              ,TIME_FORMAT(a.time_in_night_shift, '%H:%i') time_in_night_shift_formatted
+              ,TIME_FORMAT(a.leave_time_night_shift, '%H:%i') leave_time_night_shift_formatted
+              ,TIME_FORMAT(a.time_in_extra_shift, '%H:%i') time_in_extra_shift_formatted
+              ,TIME_FORMAT(a.leave_time_extra_shift, '%H:%i') leave_time_extra_shift_formatted
+              ,TIME_FORMAT(a.time_in_double_shift_morning, '%H:%i') time_in_double_shift_morning_formatted
+              ,TIME_FORMAT(a.leave_time_double_shift_morning, '%H:%i') leave_time_double_shift_morning_formatted
+              ,TIME_FORMAT(a.time_in_double_shift_evening, '%H:%i') time_in_double_shift_evening_formatted
+              ,TIME_FORMAT(a.leave_time_double_shift_evening, '%H:%i') leave_time_double_shift_evening_formatted
+              ,e.first_name AS employee_name
+        FROM attendance a
+        LEFT JOIN (employee e) ON (e.employee_id = a.employee_id) 
+        ";
+
+        return $SQL;
+    }
+    /**
+     *
+     */
+    function setSearchVarOld() {
+        $tv = Zend_Registry::get('tv');
+        $fn = Zend_Registry::get('fn');
+        $searchVar = Zend_Registry::get('searchVar');
+        $cpCfg = Zend_Registry::get('cpCfg');
+        $searchVar->mainTableAlias = 'a';
+
+        $attendance_id  	= $fn->getReqParam('attendance_id');
+        $employee_id       	= $fn->getReqParam('employee_id');
+        $special_search 	= $fn->getReqParam('special_search');
+
+        $userGroupID    	= $fn->getSessionParam('userGroupID');
+        $staffIDS       	= $fn->getSessionParam('staff_id');
+        $attendanceDate1    = $fn->getReqParam('attendanceDate1');
+        $attendanceDate2    = $fn->getReqParam('attendanceDate2');
+        $employee_id        = $fn->getReqParam('employee_id');
+
+        if ($attendance_id != '' ) {
+            $searchVar->sqlSearchVar[] = "a.attendance_id  = '{$attendance_id}'";
+        } else if ($tv['record_id'] != '' ) {
+            $searchVar->sqlSearchVar[] = "a.attendance_id  = '{$tv['record_id']}'";
+        } else {
+            if ($employee_id != '' ) {
+                $searchVar->sqlSearchVar[] = "a.employee_id  = '{$employee_id}'";
+            }
+
+            if ($tv['special_search'] == "Absent") {
+                $searchVar->sqlSearchVar[] = "a.on_leave = 1";
+            }
+
+            if ($tv['special_search'] == "Present") {
+                $searchVar->sqlSearchVar[] = "(a.on_leave = 0 OR a.on_leave IS NULL)";
+            }
+
+            if ($attendanceDate1 != "" && $attendanceDate1 != "From"
+            && $attendanceDate2 != "" && $attendanceDate2 != "To" ) {
+                $searchVar->sqlSearchVar[] = "(a.record_date BETWEEN '{$attendanceDate1}' AND '{$attendanceDate2}')";
+            }
+
+            if ($attendanceDate1 != "" && $attendanceDate1 != "From" && $attendanceDate2 == "To") {
+                $searchVar->sqlSearchVar[] = "(a.record_date >= '{$attendanceDate1}')";
+            }
+
+            if ($tv['keyword'] != "") {
+                $searchVar->sqlSearchVar[] = "(
+                    s.first_name LIKE '%{$tv['keyword']}%'
+                 OR s.last_name  LIKE '%{$tv['keyword']}%'
+                 OR a.notes  LIKE '%{$tv['keyword']}%'
+                )";
+            }
+
+            //if ($userGroupID != 1 && $userGroupID != 7){
+            if ($userGroupID != $cpCfg['cp.superAdminUGId'] && $userGroupID != 7){
+                $searchVar->sqlSearchVar[] = "a.staff_id= '{$staffIDS}'";
+            }
+
+            $searchVar->sortOrder = "a.record_date DESC";
+        }
+    }
+
+    /**
+     *
+     */
+    function getNewValidate() {
+        $validate = Zend_Registry::get('validate');
+
+        $validate->resetErrorArray();
+
+        $validate->validateData('employee_id', 'Please select the staff');
+
+        if (count($validate->errorArray) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+     function getDeleteEmployeSubmit() {
+        $validate = Zend_Registry::get('validate');
+        $fn = Zend_Registry::get('fn');
+        $dbUtil = Zend_Registry::get('dbUtil');
+        $db = Zend_Registry::get('db');
+        
+        try {
+            $daily_attendance_id = $fn->getReqParam('daily_attendance_id');
+            
+            if (empty($daily_attendance_id)) {
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Attendance ID is missing'
+                ));
+                return;
+            }
+            
+            // Sanitize the input to prevent SQL injection
+            $daily_attendance_id = (int)$daily_attendance_id;
+            
+            // First check if record exists
+            $checkSQL = "SELECT COUNT(*) as count FROM daily_attendance WHERE daily_attendance_id = {$daily_attendance_id}";
+            $checkResult = $db->sql_query($checkSQL);
+            $row = $db->sql_fetchrow($checkResult);
+            
+            if ($row['count'] == 0) {
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Attendance record not found'
+                ));
+                return;
+            }
+            
+            // Begin transaction
+            $db->sql_query("START TRANSACTION");
+            
+            try {
+                // Delete the record
+                $SQL = "DELETE FROM daily_attendance WHERE daily_attendance_id = {$daily_attendance_id}";
+                $result = $db->sql_query($SQL);
+                
+                if ($result) {
+                    $db->sql_query("COMMIT");
+                    echo json_encode(array(
+                        'success' => true,
+                        'message' => 'Attendance record deleted successfully'
+                    ));
+                    return;
+                } else {
+                    $db->sql_query("ROLLBACK");
+                    echo json_encode(array(
+                        'success' => false,
+                        'message' => 'Failed to delete attendance record'
+                    ));
+                    return;
+                }
+            } catch (Exception $e) {
+                $db->sql_query("ROLLBACK");
+                header('Content-Type: application/json');
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ));
+                return;
+            }
+        } catch (Exception $e) {
+            header('Content-Type: application/json');
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ));
+            return;
+        }
+    }
+
+
+    /**
+     *
+     */
+    function getAdd(){
+        $fn = Zend_Registry::get('fn');
+        $validate = Zend_Registry::get('validate');
+
+        if (!$this->getNewValidate()){
+            return $validate->getErrorMessageXML();
+        }
+
+        $fa = $this->getFields();
+        $id = $fn->addRecord($fa);
+        $fn->returnAfterNewSave($id);
+    }
+
+    /**
+     *
+     */
+    function getEditValidate() {
+        $validate = Zend_Registry::get('validate');
+        $fn = Zend_Registry::get('fn');
+        
+        $hour = $fn->getReqParam('leave_time_dd_hour');
+        $min  = $fn->getReqParam('leave_time_dd_minute');
+
+        $validate->resetErrorArray();
+
+        //$validate->validateData('staff_id', 'Please select the staff');
+        $validate->validateData('record_date', 'Please enter the date');
+        $validate->validateData('shift', 'Please choose the shift');
+        
+        /*if ($hour == '' || $min == ''){
+            $validate->errorArray['leave_time']['name'] = "leave_time";
+            $validate->errorArray['leave_time']['msg']  = 'Please enter the time';
+        }*/
+
+        if (count($validate->errorArray) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *
+     */
+    function getSave(){
+        $fn = Zend_Registry::get('fn');
+        $db = Zend_Registry::get('db');
+        $dbUtil = Zend_Registry::get('dbUtil');
+        $validate = Zend_Registry::get('validate');
+
+        if (!$this->getEditValidate()){
+            return $validate->getErrorMessageXML();
+        }
+
+        $fa = $this->getFields();
+
+        $attendance_id = $fn->getPostParam('attendance_id');
+        if($fa['on_leave'] == '' || $fa['on_leave'] == '0') {            
+            $SQLAttendance = "
+            SELECT time_in_day_shift
+                   ,leave_time_day_shift
+                   ,time_in_night_shift
+                   ,leave_time_night_shift
+                   ,time_in_double_shift_morning
+                   ,leave_time_double_shift_morning
+                   ,time_in_double_shift_evening
+                   ,leave_time_double_shift_evening
+                   ,staff_id
+                   ,employee_id
+            FROM attendance
+            WHERE attendance_id = {$attendance_id}
+            ";
+            $resultAttendance = $db->sql_query($SQLAttendance);
+            $rowAttendance    = $db->sql_fetchrow($resultAttendance);
+            
+            //if($rowAttendance['time_in'] == "" && $rowAttendance['leave_time'] == "" && $rowAttendance['time_in_shift2'] == "" && $rowAttendance['leave_time_shift2'] == "" && $rowAttendance['time_in_shift1'] == "" && $rowAttendance['leave_time_shift1'] == "") {
+                $SQLEmployee = "
+                SELECT employee_type
+                       ,time_in
+                       ,time_out
+                       ,time_in_night
+                       ,time_out_night
+                       ,time_in_morning
+                       ,time_out_morning
+                       ,time_in_evening
+                       ,time_out_evening
+                       ,staff_id
+                FROM employee
+                WHERE employee_id = {$rowAttendance['employee_id']}
+                ";
+                $resultEmployee = $db->sql_query($SQLEmployee);
+                $rowEmployee    = $db->sql_fetchrow($resultEmployee);
+
+                $faAtten = array();
+                if($fa['shift'] == 'DSM'){
+                    $faAtten['time_in_double_shift_morning']    = $rowEmployee['time_in_morning'];
+                    $faAtten['leave_time_double_shift_morning'] = $rowEmployee['time_out_morning'];
+
+                } elseif ($fa['shift'] == 'DSE') {
+                    $faAtten['time_in_double_shift_evening']    = $rowEmployee['time_in_evening'];
+                    $faAtten['leave_time_double_shift_evening'] = $rowEmployee['time_out_evening'];
+
+                } elseif ($fa['shift'] == 'Day') {
+                    $faAtten['time_in_day_shift']      = $rowEmployee['time_in'];
+                    $faAtten['leave_time_day_shift']   = $rowEmployee['time_out'];
+
+                } elseif ($fa['shift'] == 'Night') {
+                    $faAtten['time_in_night_shift']    = $rowEmployee['time_in_night'];
+                    $faAtten['leave_time_night_shift'] = $rowEmployee['time_out_night'];
+                }
+
+                $whereCondition = "WHERE attendance_id = {$attendance_id}";
+                $SQLUpdate = $dbUtil->getUpdateSQLStringFromArray($faAtten, 'attendance', $whereCondition);
+                $db->sql_query($SQLUpdate);
+            //}
+        } else {
+            $faAtten = array();
+            $faAtten['time_in_day_shift']      = '';
+            $faAtten['leave_time_day_shift']   = '';
+            $faAtten['time_in_night_shift']    = '';
+            $faAtten['leave_time_night_shift'] = '';
+
+            $whereCondition = "WHERE attendance_id = {$attendance_id}";
+            $SQLUpdate = $dbUtil->getUpdateSQLStringFromArray($faAtten, 'attendance', $whereCondition);
+            $db->sql_query($SQLUpdate);
+        }
+
+        $id = $fn->saveRecord($fa);
+        $fn->returnAfterNewSave($id);
+    }
+
+    /**
+     *
+     */
+    function getFields() {
+        $ln = Zend_Registry::get('ln');
+        $fn = Zend_Registry::get('fn');
+
+        $fa = array();
+
+        $fa = $fn->addToFieldsArray($fa, 'staff_id');
+        $fa = $fn->addToFieldsArray($fa, 'record_date');
+        $fa = $fn->addToFieldsArray($fa, 'on_leave');
+        $fa = $fn->addToFieldsArray($fa, 'notes');
+        $fa = $fn->addToFieldsArray($fa, 'description');
+        $fa = $fn->addToFieldsArray($fa, 'time_in');
+        $fa = $fn->addToFieldsArray($fa, 'leave_time');
+        $fa = $fn->addToFieldsArray($fa, 'type_of_leave');
+
+        $fa = $fn->addToFieldsArray($fa, 'time_in_morning');
+        $fa = $fn->addToFieldsArray($fa, 'leave_time_morning');
+        $fa = $fn->addToFieldsArray($fa, 'time_in_evening');
+        $fa = $fn->addToFieldsArray($fa, 'leave_time_evening');
+        $fa = $fn->addToFieldsArray($fa, 'task');
+        $fa = $fn->addToFieldsArray($fa, 'shift');
+        $fa = $fn->addToFieldsArray($fa, 'time_in_extra_shift');
+        $fa = $fn->addToFieldsArray($fa, 'leave_time_extra_shift');
+        $fa = $fn->addToFieldsArray($fa, 'time_in_night_shift');
+        $fa = $fn->addToFieldsArray($fa, 'leave_time_night_shift');
+        $fa = $fn->addToFieldsArray($fa, 'time_in_day_shift');
+        $fa = $fn->addToFieldsArray($fa, 'leave_time_day_shift');
+        $fa = $fn->addToFieldsArray($fa, 'time_in_double_shift_morning');
+        $fa = $fn->addToFieldsArray($fa, 'leave_time_double_shift_morning');
+        $fa = $fn->addToFieldsArray($fa, 'employee_id');
+
+        /*$fa['time_in']    = $fn->getFullHourValueFromDD('time_in');
+        $fa['leave_time'] = $fn->getFullHourValueFromDD('leave_time');*/
+        
+        return $fa;
+    }
+
+    function getAddNewValuelistFormSubmit() {
+        $fn       = Zend_Registry::get('fn');
+        $db       = Zend_Registry::get('db');
+        $dbUtil   = Zend_Registry::get('dbUtil');
+        $validate = Zend_Registry::get('validate');
+        
+        $valuelist_value = $fn->getPostParam('valuelist_value');
+        $valuelist_name  = $fn->getReqParam('valuelist_name');
+
+        /*if (!$this->getAddNewValuelistFormValidate($valuelist_name, $valuelist_value)){
+            return $validate->getErrorMessageXML();
+        }*/
+        
+        $fa = array();
+        $fa['key_text']      = $valuelist_name;
+        $fa['value']         = $valuelist_value;
+        $fa['creation_date'] = date("Y-m-d H:i:s");
+        
+        $insert = $dbUtil->getInsertSQLStringFromArray($fa, 'valuelist');
+        $result = $db->sql_query($insert);
+        $id     = $db->sql_nextid();
+            
+        return $validate->getSuccessMessageXML('', $valuelist_value);
+    }
+
+
+    function getAddEmployeSubmit() {
+        $validate = Zend_Registry::get('validate');
+        $fn = Zend_Registry::get('fn');
+        $dbUtil = Zend_Registry::get('dbUtil');
+        $db = Zend_Registry::get('db');
+        
+        try {
+            $employee_id = $fn->getReqParam('employee_id');
+            $date = $fn->getReqParam('date');
+            $shift = $fn->getReqParam('shift');
+            $status = $fn->getReqParam('status');
+            
+            if (empty($employee_id) || empty($date) || empty($status)) {
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Missing required parameters'
+                ));
+                return;
+            }
+            
+            // Begin transaction
+            $db->sql_query("START TRANSACTION");
+            
+            try {
+                // Check if record already exists
+                $checkSQL = "SELECT daily_attendance_id 
+                           FROM daily_attendance 
+                           WHERE employee_id = {$employee_id} 
+                           AND record_date = '{$date}' 
+                           AND shift = '{$shift}'";
+                           
+                $checkResult = $db->sql_query($checkSQL);
+                $existingRecord = $db->sql_fetchrow($checkResult);
+                
+                if ($existingRecord) {
+                    // Update existing record
+                    $updateSQL = "UPDATE daily_attendance 
+                                SET attendance_status = '{$status}',
+                                    modification_date = NOW() 
+                                WHERE daily_attendance_id = {$existingRecord['daily_attendance_id']}";
+                                
+                    $db->sql_query($updateSQL);
+                    $daily_attendance_id = $existingRecord['daily_attendance_id'];
+                } else {
+                    // Insert new record
+                    $insertSQL = "INSERT INTO daily_attendance 
+                                (employee_id, record_date, shift, attendance_status, creation_date) 
+                                VALUES 
+                                ({$employee_id}, '{$date}', '{$shift}', '{$status}', NOW())";
+                                
+                    $db->sql_query($insertSQL);
+                    $daily_attendance_id = $db->sql_nextid();
+                }
+                
+                $db->sql_query("COMMIT");
+                
+                echo json_encode(array(
+                    'success' => true,
+                    'daily_attendance_id' => $daily_attendance_id,
+                    'message' => 'Attendance record saved successfully'
+                ));
+                
+            } catch (Exception $e) {
+                $db->sql_query("ROLLBACK");
+                throw $e;
+            }
+            
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Error saving attendance record: ' . $e->getMessage()
+            ));
+        }
+    }
+
+
+      function getAddEmployeValidate() {
+        $validate = Zend_Registry::get('validate');
+        $fn = Zend_Registry::get('fn');
+        $db = Zend_Registry::get('db');
+
+        $employee_id  = $fn->getReqParam('employee_id');
+
+        $validate->resetErrorArray();
+
+        
+
+        if (count($validate->errorArray) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *
+     */
+    function getExportData($dataArray){
+        $phpExcel = includeCPClass('Lib', 'PhpExcelExportWrapper', 'PhpExcelExportWrapper');
+        $cpCfg = Zend_Registry::get('cpCfg');
+        $fn = Zend_Registry::get('fn');
+
+        
+            $fa = array(
+                  'staff_name'    => $phpExcel->getFldObj('Staff Name')
+                 ,'record_date'   => $phpExcel->getFldObj('Date')
+                 ,'on_leave'   	  => $phpExcel->getFldObj('On Leave')
+                 ,'time_in'   	  => $phpExcel->getFldObj('Time In')
+                 ,'leave_time'    => $phpExcel->getFldObj('Time out')
+            );
+
+        $file_name = "Attendance_" . date("d-m-Y") . ".xls";
+
+        $config = array(
+             'filename'  => $file_name
+            ,'fldsArr'   => $fa
+            ,'dataArray' => $dataArray
+        );
+
+        return $phpExcel->exportData($config);
+    }
+
+    /**
+     *
+     */
+    function getUpdateAttendanceShoes() {
+        $validate = Zend_Registry::get('validate');
+        $fn = Zend_Registry::get('fn');
+        $dbUtil = Zend_Registry::get('dbUtil');
+        $db = Zend_Registry::get('db');
+
+        $attendance_id = $fn->getReqParam('attendance_id');
+
+        $SQL = "
+        UPDATE attendance set shoes = 'Yes'
+        WHERE attendance_id = {$attendance_id}
+        ";
+        $result = $db->sql_query($SQL);
+    }
+
+    /**
+     *
+     */
+    function getUpdateAttendanceBadge() {
+        $validate = Zend_Registry::get('validate');
+        $fn = Zend_Registry::get('fn');
+        $dbUtil = Zend_Registry::get('dbUtil');
+        $db = Zend_Registry::get('db');
+
+        $attendance_id = $fn->getReqParam('attendance_id');
+
+        $SQL = "
+        UPDATE attendance set badge = 'Yes'
+        WHERE attendance_id = {$attendance_id}
+        ";
+        $result = $db->sql_query($SQL);
+    }
+
+    /**
+     *
+     */
+    function getUpdateAttendanceDress() {
+        $validate = Zend_Registry::get('validate');
+        $fn = Zend_Registry::get('fn');
+        $dbUtil = Zend_Registry::get('dbUtil');
+        $db = Zend_Registry::get('db');
+
+        $attendance_id = $fn->getReqParam('attendance_id');
+
+        $SQL = "
+        UPDATE attendance set dress = 'Yes'
+        WHERE attendance_id = {$attendance_id}
+        ";
+        $result = $db->sql_query($SQL);
+    }
+}

@@ -1,0 +1,1330 @@
+/* Run the below code in the browser to enable new module */
+===========================================================
+http://habibiahms.localhost/admin/index.php?module=core_userGroup&_spAction=createAccessRecords
+http://habibiahms.cubosale.in/admin/index.php?module=core_userGroup&_spAction=createAccessRecords
+
+
+Mariyam 10/11/2017
+====================
+ALTER TABLE `patient_visit` ADD `order_id` INT( 11 ) NULL ;
+
+CREATE TABLE IF NOT EXISTS `prescription` (
+  `prescription_id` int(11) NOT NULL AUTO_INCREMENT,
+  `disease_name` varchar(100) DEFAULT NULL,
+  `description` text,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`prescription_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `prescribe_medicine` (
+  `prescribe_medicine_id` int(11) NOT NULL AUTO_INCREMENT,
+  `medicine_name` varchar(100) DEFAULT NULL,
+  `dosage` varchar(255) DEFAULT NULL,
+  `instruction` varchar(100) DEFAULT NULL,
+  `days` int(11) DEFAULT NULL,
+  `prescription_id` int(11) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`prescribe_medicine_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ; 
+
+
+Ansari 11/11/2017
+====================
+DROP TABLE `oral_hygienic_visit_history`;
+DROP TABLE `oral_hygienic_visit`;
+DROP TABLE `habits_information`;
+DROP TABLE `habits_information_history`;
+DROP TABLE `intra_oral_information`;
+DROP TABLE `intra_oral_information_history`;
+DROP TABLE `extra_oral_information`;
+DROP TABLE `extra_oral_information_history`;
+DROP TABLE `peridontium_information`;
+DROP TABLE `peridontium_information_history`;
+
+CREATE TABLE IF NOT EXISTS `medical_test_visit` (
+  `medical_test_visit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `fees` int(11) DEFAULT NULL,
+  `medical_test_id` int(11) DEFAULT NULL,
+  `patient_visit_id` int(11) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `notes` text,
+  PRIMARY KEY (`medical_test_visit_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+DROP TABLE `treatment_visit`;
+DROP TABLE `diagnosis`;
+
+Ansari 15/11/2017
+====================
+ALTER TABLE `order_item` CHANGE `invoice_clear_status` `invoice_clear_status` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+ALTER TABLE `patient_information` ADD `age` int(11) DEFAULT NULL;
+
+ALTER TABLE `invoice` CHANGE `cust_address1` `cust_address1` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `cust_address2` `cust_address2` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `cust_address_country_code` `cust_address_country_code` VARCHAR(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `cust_address_po_code` `cust_address_po_code` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `cust_email` `cust_email` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+ALTER TABLE `receipt` CHANGE `flag` `flag` TINYINT(4) NULL DEFAULT NULL, CHANGE `receipt_status` `receipt_status` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+ALTER TABLE `invoice_receipt_history` CHANGE `flag` `flag` TINYINT(4) NULL DEFAULT NULL;
+
+ALTER TABLE `order` CHANGE `company_id` `company_id` VARCHAR(50) NULL DEFAULT NULL; 
+
+Mariyam 21/11/2017
+====================
+CREATE TABLE IF NOT EXISTS `expense` (
+  `expense_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group` varchar(255) DEFAULT NULL,
+  `sub_group` varchar(255) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT '0.00',
+  `description` text,
+  `created_by` varchar(255) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`expense_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+Ansari 15/11/2017
+====================
+ALTER TABLE `prescription` ADD `flag` TINYINT(4) DEFAULT NULL;
+ALTER TABLE `medical_test` ADD `normal_value` VARCHAR(100) NULL;
+
+Ansari 23/11/2017
+====================
+ALTER TABLE `prescribe_medicine` ADD `product_id` int(11) DEFAULT NULL;
+
+ALTER TABLE `product`
+  DROP `mol2`,
+  DROP `mol3`,
+  DROP `mol4`,
+  DROP `mol5`,
+  DROP `mol6`,
+  DROP `qty_in_stock2`,
+  DROP `qty_in_stock3`,
+  DROP `qty_in_stock4`,
+  DROP `qty_in_stock5`,
+  DROP `qty_in_stock6`,
+  DROP `qty_in_stock7`,
+  DROP `qty_in_stock8`,
+  DROP `qty_in_stock9`;
+
+Mariyam 23/11/2017
+====================
+ALTER TABLE `employee` ADD `staff_id` INT( 11 ) NULL ;
+
+CREATE TABLE IF NOT EXISTS `expense_group` (
+`expense_group_id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+`title` varchar( 255 ) DEFAULT NULL ,
+`created_by` varchar( 255 ) DEFAULT NULL ,
+`creation_date` datetime DEFAULT NULL ,
+`modified_by` varchar( 255 ) DEFAULT NULL ,
+`modification_date` datetime DEFAULT NULL ,
+PRIMARY KEY ( `expense_group_id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+CREATE TABLE IF NOT EXISTS `expense_sub_group` (
+`expense_sub_group_id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+`expense_group_id` int( 11 ) DEFAULT NULL ,
+`title` varchar( 255 ) DEFAULT NULL ,
+`created_by` varchar( 255 ) DEFAULT NULL ,
+`creation_date` datetime DEFAULT NULL ,
+`modified_by` varchar( 255 ) DEFAULT NULL ,
+`modification_date` datetime DEFAULT NULL ,
+PRIMARY KEY ( `expense_sub_group_id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+
+MOIN 25/11/2017
+====================
+CREATE TABLE IF NOT EXISTS `complain_visit_history` (
+`complain_visit_history_id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+`patient_visit_id` int(11) DEFAULT NULL,
+`patient_information_id` int(11) DEFAULT NULL,
+`prescription_id` int(11) DEFAULT NULL,
+`created_by` varchar( 255 ) DEFAULT NULL,
+`creation_date` datetime DEFAULT NULL,
+`modified_by` varchar( 255 ) DEFAULT NULL,
+`modification_date` datetime DEFAULT NULL,
+PRIMARY KEY ( `complain_visit_history_id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+MOIN 27/11/2017
+====================
+ALTER TABLE `patient_visit` ADD `weight` VARCHAR(50) NULL, 
+ADD `temperature` VARCHAR(50) NULL, 
+ADD `crt` VARCHAR(50) NULL, 
+ADD `pulse_rate` VARCHAR(50) NULL, 
+ADD `respiratory_rate` VARCHAR(50) NULL, 
+ADD `blood_pressure` VARCHAR(50) NULL, 
+ADD `diagnosis` TEXT NULL;
+
+CREATE TABLE IF NOT EXISTS `complain` (
+  `complain_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `complain_group` varchar(100) DEFAULT NULL,
+  `description` text,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`complain_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `patient_information` CHANGE `age` `age` DECIMAL(10,2) NULL DEFAULT NULL;
+ALTER TABLE `complain_visit_history` ADD `complain_id` INT(11) NULL;
+
+CREATE TABLE IF NOT EXISTS `diagnosis_visit_history` (
+`diagnosis_visit_history_id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+`patient_visit_id` int(11) DEFAULT NULL,
+`patient_information_id` int(11) DEFAULT NULL,
+`prescription_id` int(11) DEFAULT NULL,
+`created_by` varchar( 255 ) DEFAULT NULL,
+`creation_date` datetime DEFAULT NULL,
+`modified_by` varchar( 255 ) DEFAULT NULL,
+`modification_date` datetime DEFAULT NULL,
+PRIMARY KEY ( `diagnosis_visit_history_id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+ALTER TABLE `patient_information` ADD `age_year` INT(11) NULL, 
+ADD `age_month` INT(11) NULL, 
+ADD `age_day` INT(11) NULL;
+
+ALTER TABLE `employee` CHANGE `consultation_fees` `consultation_fees` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `employee_visit` CHANGE `consultation_fees` `consultation_fees` INT(11) NULL DEFAULT NULL;
+
+ALTER TABLE `medicines_visit` ADD `route` VARCHAR(50) NULL;
+
+INSERT INTO setting (`key_text`, `value`, `description`, `value_type`, `creation_date`, `show_to_user`) VALUES
+('cp.doctorNamePDF', 'Dr. M.Shaik Abdul Kader M.B.B.S.,D.C.H.,', 'Doctor Name', 'Text Field', NOW(), 1),
+('cp.doctorSpecialistPDF', 'Child Specialist', 'Specialist', 'Text Field', NOW(), 1);
+
+INSERT INTO setting (`key_text`, `value`, `description`, `value_type`, `creation_date`, `show_to_user`) VALUES
+('cp.footerPhPdf', 'Cell : 75983 55510', 'Cell No', 'Text Field', NOW(), 1),
+('cp.footerTimingPdf', 'Morning 7.30AM - 8.30AM, Night 7PM  - 9PM', 'Timing', 'Text Field', NOW(), 1),
+('cp.footerCellPdf', 'Ph : 0461-2325777', 'Ph No.', 'Text Field', NOW(), 1);
+
+ALTER TABLE `patient_visit` ADD `visit_procedure` TEXT NULL;
+
+INSERT INTO setting (`key_text`, `value`, `description`, `value_type`, `creation_date`, `show_to_user`) VALUES
+('cp.clinicName', 'HABIBIA HOSPITAL', 'HABIBIA HOSPITAL', 'Text Field', NOW(), 1);
+
+
+ALTER TABLE `product` ADD `route` VARCHAR(50) NULL, 
+ADD `medicine_qty` VARCHAR(100) NULL, 
+ADD `days` VARCHAR(100) NULL, 
+ADD `instruction` VARCHAR(100) NULL;
+
+Mariyam 5/12/2017
+====================
+ALTER TABLE `medical_test` ADD `blood_related` INT( 1 ) NULL ;
+
+Moin 5/12/2017
+====================
+INSERT INTO valuelist (`key_text`, `value`, `creation_date`) VALUES
+('dosage', '1/2', NOW()),
+('dosage', '3/4', NOW()),
+('dosage', '1', NOW()),
+('dosage', '0.5ML', NOW()),
+('dosage', '1ML', NOW()),
+('dosage', '2.5ML', NOW()),
+('dosage', '3ML', NOW()),
+('dosage', '5ML', NOW()),
+('dosage', '7.5ML', NOW()),
+('dosage', '10.5ML', NOW()),
+('dosage', '15ML', NOW()),
+('dosage', '25ML', NOW());
+
+ALTER TABLE `employee` ADD `staff_id` INT(11) NULL;
+
+Mariyam 7/12/2017
+====================
+CREATE TABLE IF NOT EXISTS `dosage_agewise` (
+  `dosage_agewise_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `dosage` varchar(255) DEFAULT NULL,
+  `age_from` decimal(10,2) DEFAULT '0.00',
+  `age_to` decimal(10,2) DEFAULT '0.00',
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`dosage_agewise_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `dosage_wtwise` (
+  `dosage_wtwise_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `dosage` varchar(255) DEFAULT NULL,
+  `wt_from` decimal(10,2) DEFAULT '0.00',
+  `wt_to` decimal(10,2) DEFAULT '0.00',
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`dosage_wtwise_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `dosage_agewise` ADD `age_from_year` INT( 11 ) NULL ,
+ADD `age_from_month` INT( 11 ) NULL ,
+ADD `age_from_day` INT( 11 ) NULL ,
+ADD `age_to_year` INT( 11 ) NULL ,
+ADD `age_to_month` INT( 11 ) NULL ,
+ADD `age_to_day` INT( 11 ) NULL ;
+
+Moin 7/12/2017
+====================
+
+INSERT INTO valuelist (`key_text`, `value`, `creation_date`) VALUES
+('employeeCategory', 'Doctor', NOW()),
+('employeeCategory', 'Duty Doctor', NOW()),
+('employeeCategory', 'Staff', NOW());
+
+Ansari 9/12/2017
+====================
+
+ALTER TABLE `site` CHANGE `admin_email` `admin_email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `creation_date` `creation_date` DATE NULL DEFAULT NULL, CHANGE `modification_date` `modification_date` DATE NULL DEFAULT NULL, CHANGE `published` `published` TINYINT(1) NULL DEFAULT NULL; 
+
+Ansari 9/12/2017
+====================
+
+ALTER TABLE `expense` ADD `site_id` int(11) DEFAULT NULL;
+ALTER TABLE `expense_group` ADD `site_id` int(11) DEFAULT NULL;
+ALTER TABLE `expense_sub_group` ADD `site_id` int(11) DEFAULT NULL;
+ALTER TABLE `company` CHANGE `address_city` `address_city` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `contact_mobile` `contact_mobile` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `company_name` `company_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL; 
+ALTER TABLE `medical_test_visit` ADD `site_id` int(11) DEFAULT NULL;
+
+ALTER TABLE `site` CHANGE `admin_email` `admin_email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `creation_date` `creation_date` DATE NULL DEFAULT NULL, CHANGE `modification_date` `modification_date` DATE NULL DEFAULT NULL, CHANGE `published` `published` TINYINT(1) NULL DEFAULT NULL; 
+
+Mariyam 12/12/2017
+====================
+
+CREATE TABLE IF NOT EXISTS `attendance` (
+  `attendance_id` int(11) NOT NULL AUTO_INCREMENT,
+  `staff_id` int(11) DEFAULT NULL,
+  `leave_time` time DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `notes` text,
+  `record_date` date DEFAULT NULL,
+  `on_leave` int(11) DEFAULT NULL,
+  `time_in` time DEFAULT NULL,
+  `over_time` int(11) DEFAULT NULL,
+  `due_time` int(11) DEFAULT NULL,
+  `description` text,
+  `type_of_leave` varchar(255) DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `modified_by` varchar(100) DEFAULT NULL,
+  `task` longtext,
+  `update_mail` text,
+  `productive_level` int(50) DEFAULT NULL,
+  `check_task_level` int(50) DEFAULT NULL,
+  `late_level` int(50) DEFAULT NULL,
+  `check_task_list` varchar(100) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`attendance_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+Syed 14/1/2018
+===============
+ALTER TABLE `attendance` ADD `site_id` int(11) DEFAULT NULL ;
+ALTER TABLE attendance ADD`record_date` date DEFAULT NULL;
+ALTER TABLE attendance ADD `employee_id` int(11) DEFAULT NULL;
+
+ALTER TABLE attendance ADD `time_in` time DEFAULT NULL;
+ALTER TABLE attendance ADD `leave_time` time DEFAULT NULL;
+
+MOIN 21/12/2017
+===============
+ALTER TABLE `employee` ADD `time_in` TIME NULL,
+ADD `time_out` TIME NULL;
+
+ALTER TABLE `dosage_agewise` ADD `instruction` VARCHAR(100) NULL;
+ALTER TABLE `dosage_wtwise` ADD `instruction` VARCHAR(100) NULL;
+
+INSERT INTO valuelist (`key_text`, `value`, `creation_date`) VALUES
+('fees', '0', NOW()),
+('fees', '100', NOW()),
+('fees', '150', NOW());
+
+Mariyam 10/1/2018
+===============
+CREATE TABLE IF NOT EXISTS `in_patient` (
+  `in_patient_id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) DEFAULT NULL,
+  `date_admitted` date DEFAULT NULL,
+  `time_admitted` time DEFAULT NULL,
+  `patient_visit_id` int(11) DEFAULT NULL,
+  `patient_information_id` int(11) DEFAULT NULL,
+  `date_discharge` date DEFAULT NULL,
+  `time_of_discharge` time DEFAULT NULL,
+  `days_stayed` int(11) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT '0.00',
+  `status` varchar(100) DEFAULT NULL,
+  `summary` text,
+  `site_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `complain` text,
+  `weight` varchar(50) DEFAULT NULL,
+  `temperature` varchar(50) DEFAULT NULL,
+  `crt` varchar(50) DEFAULT NULL,
+  `pulse_rate` varchar(50) DEFAULT NULL,
+  `respiratory_rate` varchar(50) DEFAULT NULL,
+  `blood_pressure` varchar(50) DEFAULT NULL,
+  `flag` int(1) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`in_patient_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+MOIN 22/01/2018
+===============
+ALTER TABLE `invoice` ADD `cancelled_date` DATETIME NULL,
+ADD `cancelled_by` VARCHAR(100) NULL;
+
+ALTER TABLE `medical_test` ADD `category` VARCHAR(100) NULL;
+
+INSERT INTO valuelist (`key_text`, `value`, `creation_date`) VALUES
+('investigationCategory', 'Blood Tests', NOW()),
+('investigationCategory', 'Biochemical Tests', NOW()),
+('investigationCategory', 'Lipid Tests', NOW()),
+('investigationCategory', 'Liver Function Test', NOW()),
+('investigationCategory', 'Serology', NOW()),
+('investigationCategory', 'Urine Tests', NOW()),
+('investigationCategory', 'Motion Tests', NOW()),
+('investigationCategory', 'Culture & Sensitivity', NOW());
+
+CREATE TABLE `lab_test` (
+  `lab_test_id` int(11) NOT NULL AUTO_INCREMENT,
+  `visit_code` varchar(30) DEFAULT NULL,
+  `patient_information_id` int(11) DEFAULT NULL,
+  `check_up_date` date DEFAULT NULL,
+  `check_up_time` time DEFAULT NULL,
+  `follow_up_date` date DEFAULT NULL,
+  `visit_summary` text,
+  `notes` text,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `appointment_id` int(11) DEFAULT NULL,
+  `flag` int(1) DEFAULT NULL,
+  `complain` text,
+  `treatment_summary` text,
+  `other_medical_history` text,
+  `other_oral_hygienic` text,
+  `other_intra_oral_exam` text,
+  `other_extra_oral_exam` text,
+  `other_peridontium` text,
+  `longtime_follow_up_date` date DEFAULT NULL,
+  `follow_up_notes` text,
+  `longtime_follow_up_notes` text,
+  `follow_up_value` varchar(100) DEFAULT NULL,
+  `longtime_follow_up_value` varchar(100) DEFAULT NULL,
+  `record_type` varchar(100) DEFAULT NULL,
+  `site_id` int(11) DEFAULT NULL,
+  `dr_required` int(1) DEFAULT NULL,
+  `no_of_days` int(10) DEFAULT NULL,
+  `resume_duty_on` date DEFAULT NULL,
+  `medical_certficate_date` date DEFAULT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
+  `bill_type` varchar(255) DEFAULT NULL,
+  `company_id` varchar(255) DEFAULT NULL,
+  `address_flat` varchar(255) DEFAULT NULL,
+  `address_street` varchar(255) DEFAULT NULL,
+  `address_town` varchar(255) DEFAULT NULL,
+  `address_state` varchar(255) DEFAULT NULL,
+  `address_country` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `weight` varchar(50) DEFAULT NULL,
+  `temperature` varchar(50) DEFAULT NULL,
+  `crt` varchar(50) DEFAULT NULL,
+  `pulse_rate` varchar(50) DEFAULT NULL,
+  `respiratory_rate` varchar(50) DEFAULT NULL,
+  `blood_pressure` varchar(50) DEFAULT NULL,
+  `diagnosis` text,
+  `visit_procedure` text,
+  PRIMARY KEY (`lab_test_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `medical_test_lab` (
+  `medical_test_lab_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `fees` int(11) DEFAULT NULL,
+  `medical_test_id` int(11) DEFAULT NULL,
+  `lab_test_id` int(11) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `site_id` int(11) DEFAULT NULL,
+  `notes` text,
+  PRIMARY KEY (`medical_test_lab_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `order` ADD `lab_test_id` INT(11) NULL,
+ADD `order_type` VARCHAR(100) NULL;
+
+SYED 26/01/2018
+===============
+ALTER TABLE `patient_visit` ADD `lab_test_id` INT( 11 ) NULL;
+ALTER TABLE `medicines_visit` ADD `lab_test_id` INT NULL ; 
+
+ALTER TABLE `medical_test` ADD `sort_order` INT(11) NULL;
+
+MOIN 1/02/2018
+===============
+ALTER TABLE `medical_test` ADD `group_name` VARCHAR(100) NULL,
+ADD `units` VARCHAR(100) NULL;
+
+CREATE TABLE IF NOT EXISTS `medical_test_parameter` (
+  `medical_test_parameter_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `fees` int(11) DEFAULT NULL,
+  `medical_test_id` int(11) DEFAULT NULL,
+  `normal_value` varchar(100) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `site_id` int(11) DEFAULT NULL,
+  `notes` text,
+  PRIMARY KEY (`medical_test_parameter_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `medical_visit_parameter` (
+  `medical_visit_parameter_id` int(11) NOT NULL AUTO_INCREMENT,
+  `medical_test_parameter_id` int(11) DEFAULT NULL,
+  `medical_test_id` int(11) DEFAULT NULL,
+  `medical_test_visit_id` int(11) DEFAULT NULL,
+  `value` varchar(100) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `site_id` int(11) DEFAULT NULL,
+  `notes` text,
+  PRIMARY KEY (`medical_visit_parameter_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `medical_visit_parameter` ADD `medical_test_lab_id` INT(11) NULL;
+ALTER TABLE `medical_visit_parameter` ADD `lab_test_id` INT(11) NULL,
+ADD `patient_visit_id` INT(11) NULL;
+
+ANSARI 02/02/2018
+=================
+ALTER TABLE `employee` ADD `fees_commission_type` VARCHAR(10) DEFAULT NULL;
+ALTER TABLE `employee` ADD `fees_commission` DECIMAL(10,2) DEFAULT '0.00';
+ALTER TABLE `employee_visit` ADD `fees_commission` DECIMAL(10,2) DEFAULT '0.00';
+ALTER TABLE `patient_visit` ADD `units` VARCHAR(100) DEFAULT NULL;
+
+ANSARI 05/02/2018
+=================
+ALTER TABLE `medical_test_parameter` ADD `units` VARCHAR(100) DEFAULT NULL;
+
+MOIN 19/02/2018
+=================
+CREATE TABLE `medicines_in_patient` (
+  `medicines_in_patient_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `instruction` varchar(100) DEFAULT NULL,
+  `days` varchar(100) DEFAULT NULL,
+  `qty` varchar(100) DEFAULT NULL,
+  `in_patient_id` int(11) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `cost_price` decimal(10,2) DEFAULT NULL,
+  `selling_price` decimal(10,2) DEFAULT NULL,
+  `dosage` varchar(255) DEFAULT NULL,
+  `route` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`medicines_in_patient_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `medical_test_in_patient` (
+  `medical_test_in_patient_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `fees` int(11) DEFAULT NULL,
+  `medical_test_id` int(11) DEFAULT NULL,
+  `in_patient_id` int(11) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `notes` text,
+  `site_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`medical_test_in_patient_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `medical_visit_parameter` ADD `in_patient_id` INT(11) NULL;
+ALTER TABLE `in_patient` ADD `diagnosis` TEXT NULL,
+ADD `in_patient_procedure` TEXT NULL;
+
+CREATE TABLE `employee_in_patient` (
+  `employee_in_patient_id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `in_patient_id` int(11) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `consultation_room` varchar(100) DEFAULT NULL,
+  `notes` text,
+  `consultation_fees` int(11) DEFAULT NULL,
+  `fees_commission` decimal(10,2) DEFAULT '0.00',
+  PRIMARY KEY (`employee_in_patient_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `in_patient` ADD `employee_id` INT(11) NULL;
+ALTER TABLE `order` ADD `in_patient_id` INT(11) NULL;
+
+ALTER TABLE `patient_visit` ADD `on_behalf` INT(11) NULL;
+
+ANSARI 27/02/2018
+=================
+ALTER TABLE `attendance` ADD `staff_id` INT(11) DEFAULT NULL;
+ALTER TABLE `attendance` CHANGE `flag` `flag` TINYINT(4) NULL DEFAULT NULL; 
+
+ANSARI 28/02/2018
+=================
+ALTER TABLE `employee` ADD `time_in_night` time DEFAULT NULL;
+ALTER TABLE `employee` ADD `time_out_night` time DEFAULT NULL;
+
+ANSARI 05/03/2018
+=================
+ALTER TABLE `employee` ADD `joining_date` date DEFAULT NULL;
+UPDATE `employee` SET status = 'Active';
+
+ANSARI 06/03/2018
+=================
+ALTER TABLE `in_patient` ADD `nursing_fees` int(11) DEFAULT NULL;
+ALTER TABLE `in_patient` ADD `consulting_fees` int(11) DEFAULT NULL;
+
+ANSARI 08/03/2018
+=================
+CREATE TABLE IF NOT EXISTS `emp_performance` (
+  `emp_performance_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `notes` text,
+  `created_by` varchar(200) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`emp_performance_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+ALTER TABLE `in_patient` ADD `other_fees` int(11) DEFAULT NULL;
+ALTER TABLE `in_patient` CHANGE `other_fees` `other_fees` INT(11) NULL DEFAULT '0';
+ALTER TABLE `in_patient` CHANGE `consulting_fees` `consulting_fees` INT(11) NULL DEFAULT '0';
+ALTER TABLE `in_patient` CHANGE `nursing_fees` `nursing_fees` INT(11) NULL DEFAULT '0';
+
+ANSARI 08/03/2018
+=================
+ALTER TABLE `emp_performance` ADD `site_id` int(11) DEFAULT NULL;
+
+Moin 15/03/2018
+=================
+ALTER TABLE `attendance` ADD `on_leave` INT(1) NULL;
+
+ALTER TABLE `attendance` ADD `time_in_shift2` TIME NULL,
+ADD `leave_time_shift2` TIME NULL,
+ADD `shift` VARCHAR(100) NULL;
+
+CREATE TABLE `vaccination_visit` (
+  `vaccination_visit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `fees` int(11) DEFAULT NULL,
+  `medical_test_id` int(11) DEFAULT NULL,
+  `patient_visit_id` int(11) DEFAULT NULL,
+  `patient_information_id` int(11) DEFAULT NULL,
+  `vaccination_date` date DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `notes` text,
+  `site_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`vaccination_visit_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+Ansari 05/04/2018
+=================
+ALTER TABLE `employee` ADD `lab_commission_type` VARCHAR(10) DEFAULT NULL;
+ALTER TABLE `employee` ADD `lab_commission` DECIMAL(10,2) DEFAULT '0.00';
+
+MOIN 16/04/2018
+=================
+ALTER TABLE `medical_visit_parameter` ADD `medical_test_in_patient_id` INT(11) NULL; 
+
+Mariyam 16/04/2018
+=================
+ALTER TABLE `medical_test` ADD `dosage` VARCHAR( 255 ) NULL ,
+ADD `route` VARCHAR( 50 ) NULL ;
+
+ALTER TABLE `vaccination_visit` ADD `due_date` DATE NULL;
+
+ANSARI 23/04/2018
+=================
+ALTER TABLE `patient_visit` ADD `referral_doctor_id` INT(11) DEFAULT NULL;
+
+MOIN 23/04/2018
+=================
+ALTER TABLE `medical_test_in_patient` ADD `test_repeat` INT(11) NULL;
+ALTER TABLE `medical_visit_parameter` ADD `test_repeat` INT(11) NULL;
+
+ANSARI 24/04/2018
+=================
+CREATE TABLE IF NOT EXISTS `medical_test_group` (
+`medical_test_group_id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+`medical_test_id` int( 11 ) DEFAULT NULL ,
+`group_name` varchar( 255 ) DEFAULT NULL ,
+`created_by` varchar( 255 ) DEFAULT NULL ,
+`creation_date` datetime DEFAULT NULL ,
+`modified_by` varchar( 255 ) DEFAULT NULL ,
+`modification_date` datetime DEFAULT NULL ,
+PRIMARY KEY (`medical_test_group_id`)
+) ENGINE = MYISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+ALTER TABLE `medical_test_group` ADD `site_id` INT(11) DEFAULT NULL;
+ALTER TABLE `vaccination_visit` ADD `group_name` varchar( 255 ) DEFAULT NULL;
+
+ANSARI 30/04/2018
+=================
+ALTER TABLE `order` ADD `father_name` varchar(20),
+ADD `mother_name` varchar(20),
+ADD `spuse_name` varchar(20);
+
+MOIN 2/05/2018
+=================
+ALTER TABLE `vaccination_visit` ADD `outside` INT(1) NULL;
+
+MOIN 03/05/2018
+=================
+ALTER TABLE `purchase_order` ADD `invoice_date` DATE DEFAULT NULL;
+
+MOIN 17/05/2018
+=================
+ALTER TABLE `purchase_order` ADD `overall_discount` decimal(10,2) DEFAULT NULL;
+
+ANSARI 28/05/2018
+=================
+ALTER TABLE `product` ADD `gst` float(10,2) DEFAULT NULL;
+ALTER TABLE `stock_transfer` ADD `site_id` int(11) DEFAULT NULL;
+
+ANSARI 08/06/2018
+=================
+ALTER TABLE `order_item` ADD `pack_size` VARCHAR(50) DEFAULT NULL;
+ALTER TABLE `order_item` ADD `expiry_date` date DEFAULT NULL;
+ALTER TABLE `order_item` ADD `batch_no` varchar(50) DEFAULT NULL;
+ALTER TABLE `invoice_item` ADD `pack_size` VARCHAR(50) DEFAULT NULL;
+ALTER TABLE `invoice_item` ADD `expiry_date` date DEFAULT NULL;
+ALTER TABLE `invoice_item` ADD `batch_no` varchar(50) DEFAULT NULL;
+
+INSERT INTO `setting` (`description`, `key_text`, `value`, `creation_date`, `modification_date`, `group_name`, `value_type`, `show_to_user`, `chi_value`, `used_for_admin`, `used_for_www`, `created_by`, `modified_by`, `flag`, `site_id`) VALUES
+('THIS IS USED TO DISPLAY THE TIN NO.', 'cp.addressPharmacyPdf4', 'TIN: 33885882027', '2018-06-08 17:37:12', '2018-06-08 17:37:47', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 1),
+('THIS IS USED TO DISPLAY THE PHARMACY PHONE NO.', 'cp.addressPharmacyPdf5', 'PHONE: 0461-2373296', '2018-06-08 17:36:14', '2018-06-08 17:37:04', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 1),
+('THIS IS USED TO DISPLAY THE DL NO.', 'cp.addressPharmacyPdf3', 'DL NO.TNY/2170/20-21', '2018-06-08 17:35:24', '2018-06-08 17:36:02', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 1),
+('This is used to display the pharmacy address.', 'cp.addressPharmacyPdf2', 'KURUKKU SALAI.', '2018-06-08 17:34:11', '2018-06-08 17:34:44', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 1),
+('Pharmacy name displayed using this.', 'cp.addressPharmacyPdf1', 'CRECENT MEDICALS', '2018-06-08 17:33:08', '2018-06-08 17:35:02', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 1);
+
+
+INSERT INTO `setting` (`description`, `key_text`, `value`, `creation_date`, `modification_date`, `group_name`, `value_type`, `show_to_user`, `chi_value`, `used_for_admin`, `used_for_www`, `created_by`, `modified_by`, `flag`, `site_id`) VALUES
+('THIS IS USED TO DISPLAY THE TIN NO.', 'cp.addressPharmacyPdf4', 'TIN: 33885882027', '2018-06-08 17:37:12', '2018-06-08 17:37:47', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 2),
+('THIS IS USED TO DISPLAY THE PHARMACY PHONE NO.', 'cp.addressPharmacyPdf5', 'PHONE: 0461-2373296', '2018-06-08 17:36:14', '2018-06-08 17:37:04', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 2),
+('THIS IS USED TO DISPLAY THE DL NO.', 'cp.addressPharmacyPdf3', 'DL NO.TNY/2170/20-21', '2018-06-08 17:35:24', '2018-06-08 17:36:02', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 2),
+('This is used to display the pharmacy address.', 'cp.addressPharmacyPdf2', 'KURUKKU SALAI.', '2018-06-08 17:34:11', '2018-06-08 17:34:44', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 2),
+('Pharmacy name displayed using this.', 'cp.addressPharmacyPdf1', 'CRECENT MEDICALS', '2018-06-08 17:33:08', '2018-06-08 17:35:02', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 2);
+
+
+INSERT INTO `setting` (`description`, `key_text`, `value`, `creation_date`, `modification_date`, `group_name`, `value_type`, `show_to_user`, `chi_value`, `used_for_admin`, `used_for_www`, `created_by`, `modified_by`, `flag`, `site_id`) VALUES
+('THIS IS USED TO DISPLAY THE TIN NO.', 'cp.addressPharmacyPdf4', 'TIN: 33885882027', '2018-06-08 17:37:12', '2018-06-08 17:37:47', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 3),
+('THIS IS USED TO DISPLAY THE PHARMACY PHONE NO.', 'cp.addressPharmacyPdf5', 'PHONE: 0461-2373296', '2018-06-08 17:36:14', '2018-06-08 17:37:04', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 3),
+('THIS IS USED TO DISPLAY THE DL NO.', 'cp.addressPharmacyPdf3', 'DL NO.TNY/2170/20-21', '2018-06-08 17:35:24', '2018-06-08 17:36:02', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 3),
+('This is used to display the pharmacy address.', 'cp.addressPharmacyPdf2', 'KURUKKU SALAI.', '2018-06-08 17:34:11', '2018-06-08 17:34:44', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 3),
+('Pharmacy name displayed using this.', 'cp.addressPharmacyPdf1', 'CRECENT MEDICALS', '2018-06-08 17:33:08', '2018-06-08 17:35:02', NULL, 'Text Field', 1, NULL, NULL, NULL, 'Super Admin', 'Super Admin', NULL, 3);
+
+Mariyam 05/07/2018
+=================
+CREATE TABLE IF NOT EXISTS `medicine_site` (
+`medicine_site_id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+`product_id` int( 11 ) DEFAULT NULL ,
+`site_id` int( 11 ) DEFAULT NULL ,
+`created_by` varchar( 255 ) DEFAULT NULL ,
+`creation_date` datetime DEFAULT NULL ,
+`modified_by` varchar( 255 ) DEFAULT NULL ,
+`modification_date` datetime DEFAULT NULL ,
+PRIMARY KEY ( `medicine_site_id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+ANSARI 06/07/2018
+=================
+ALTER TABLE `medicines_in_patient` ADD `continue_medicine` TINYINT(4) NULL DEFAULT NULL;
+ALTER TABLE `in_patient` ADD `date_surgery` date DEFAULT NULL;
+ALTER TABLE `in_patient` ADD `advice_discharge` varchar(255) DEFAULT NULL;
+ALTER TABLE `in_patient` ADD `date_review` date DEFAULT NULL;
+
+ANSARI 07/07/2018
+=================
+ALTER TABLE `po_product` ADD `hsn` varchar(100) DEFAULT NULL;
+ALTER TABLE `in_patient` ADD `review_doctor` int(11) DEFAULT NULL;
+
+ANSARI 09/07/2018
+=================
+ALTER TABLE `employee` ADD `employee_type` varchar(50) DEFAULT NULL;
+ALTER TABLE `attendance` ADD `time_in_shift1` TIME NULL,
+ADD `leave_time_shift1` TIME NULL;
+ALTER TABLE `in_patient` ADD `consultant_doctor` int(11) DEFAULT NULL;
+ALTER TABLE `in_patient` ADD `ref_doctor` int(11) DEFAULT NULL;
+ALTER TABLE `patient_information` ADD `previous_medical_history` TEXT NULL;
+
+ANSARI 19/07/2018
+=================
+ALTER TABLE `medicines_in_patient` ADD `treatment_given` TINYINT(4) NULL DEFAULT NULL;
+
+Mariyam 24/07/2018
+=================
+ALTER TABLE `in_patient` ADD `admission_type` VARCHAR( 100 ) NULL ,
+ADD `theater_assistant` VARCHAR( 100 ) NULL ,
+ADD `anesthetists` VARCHAR( 100 ) NULL ,
+ADD `surgeon` VARCHAR( 100 ) NULL ,
+ADD `surgery_type` VARCHAR( 100 ) NULL ,
+ADD `surgeon_fees` DECIMAL( 10, 2 ) NULL ,
+ADD `anesthetic_fees` DECIMAL( 10, 2 ) NULL ,
+ADD `theater_assistant_fees` DECIMAL( 10, 2 ) NULL ,
+ADD `duration_of_surgery` VARCHAR( 100 ) NULL ;
+
+ALTER TABLE `purchase_order` ADD `payment_status` VARCHAR( 50 ) NULL ;
+ALTER TABLE `po_product` ADD `cost_price` DECIMAL( 10, 2 ) NULL ;
+
+
+MOIN 26/07/2018
+=================
+ALTER TABLE `in_patient` ADD `name_of_surgery` VARCHAR(100) NULL, 
+ADD `theatre_charges` DECIMAL(10,2) NULL, 
+ADD `start_time` TIME NULL, 
+ADD `end_time` TIME NULL;
+
+ALTER TABLE `in_patient` ADD `referral_charges` DECIMAL(10,2) NULL;
+
+SYED 4/08/2018
+=================
+ALTER TABLE `order` ADD `ref_by_dr` VARCHAR( 50 ) NULL;
+ALTER TABLE `order` ADD `visit_code` INT NULL;
+ALTER TABLE `attendance` CHANGE `time_in` `time_in_day_shift` TIME NULL DEFAULT NULL;
+ALTER TABLE `attendance` CHANGE `leave_time` `leave_time_day_shift` TIME NULL DEFAULT NULL;
+ALTER TABLE `attendance` CHANGE `time_in_shift2` `time_in_night_shift` TIME NULL DEFAULT NULL;
+ALTER TABLE `attendance` CHANGE `leave_time_shift2` `leave_time_night_shift` TIME NULL DEFAULT NULL;
+ALTER TABLE `attendance` CHANGE `time_in_shift1` `time_in_double_shift_evening` TIME NULL DEFAULT NULL, CHANGE `leave_time_shift1` `leave_time_double_shift_evening` TIME NULL DEFAULT NULL;
+ALTER TABLE `attendance` ADD `time_in_double_shift_morning` TIME NULL DEFAULT NULL;
+ALTER TABLE `attendance` ADD `leave_time_double_shift_morning` TIME NULL DEFAULT NULL; 
+ALTER TABLE `employee` ADD `time_in_morning` TIME NULL DEFAULT NULL;
+ALTER TABLE `employee` ADD `time_out_morning` TIME NULL DEFAULT NULL;
+ALTER TABLE `employee` ADD `time_in_evening` TIME NULL DEFAULT NULL;
+ALTER TABLE `employee` ADD `time_out_evening` TIME NULL DEFAULT NULL;
+
+Mariyam 01/09/2018
+=================
+CREATE TABLE IF NOT EXISTS `pharma_daily_sales` (
+  `pharma_daily_sales_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date DEFAULT NULL,
+  `sales_amount` float(10,2) DEFAULT NULL,
+  `excess_amount` float(10,2) DEFAULT NULL,
+  `site_id` int(11) DEFAULT NULL,
+  `notes` text,
+  `created_by` varchar(255) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `flag` int(1) DEFAULT NULL,
+  PRIMARY KEY (`pharma_daily_sales_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+Ansari 10/09/2018
+=================
+ALTER TABLE `order_item` ADD `not_add_in_stock` tinyint(4) DEFAULT NULL;
+ALTER TABLE `invoice_item` ADD `not_add_in_stock` tinyint(4) DEFAULT NULL;
+ALTER TABLE `product` ADD `not_add_in_stock` tinyint(4) DEFAULT NULL;
+
+CREATE TABLE IF NOT EXISTS `mfg_product` (
+`mfg_product_id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+`medicine_company_id` int( 11 ) DEFAULT NULL ,
+`product_id` int( 11 ) DEFAULT NULL ,
+`created_by` varchar( 255 ) DEFAULT NULL ,
+`creation_date` datetime DEFAULT NULL ,
+`modified_by` varchar( 255 ) DEFAULT NULL ,
+`modification_date` datetime DEFAULT NULL ,
+PRIMARY KEY ( `mfg_product_id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+ALTER TABLE `product` ADD `medicine_company_id` INT(11) NULL;
+
+ALTER TABLE `product` ADD `offer_medicine` VARCHAR(100) NULL;
+
+ALTER TABLE `expense` ADD `source` VARCHAR(100) NULL;
+
+INSERT INTO valuelist (`key_text`, `value`, `creation_date`) VALUES
+('expenseSource', 'Hab Hosp Income', NOW()),
+('expenseSource', 'Hab Lab Income', NOW()),
+('expenseSource', 'Hab Pharm Income', NOW()),
+('expenseSource', 'Cres Hosp Income', NOW()),
+('expenseSource', 'EV Lab Income', NOW()),
+('expenseSource', 'Cres Pharm Income', NOW()),
+('expenseSource', 'Saving', NOW());
+
+Ansari 29/09/2018
+=================
+ALTER TABLE `stock_transfer_history` ADD `pack_size` VARCHAR(50) DEFAULT NULL;
+
+Ansari 01/10/2018
+=================
+ALTER TABLE `invoice` ADD `patient_visit_id` int(11) DEFAULT NULL;
+
+Ansari 03/10/2018
+=================
+ALTER TABLE `medicine_site` ADD `rake` VARCHAR(10) DEFAULT NULL;
+
+Ansari 05/10/2018
+=================
+ALTER TABLE `stock_transfer_history` CHANGE `qty` `qty` DECIMAL(10,2) NULL DEFAULT NULL, CHANGE `qty_requested` `qty_requested` DECIMAL(10,2) NULL DEFAULT NULL; 
+
+Ansari 10/10/2018
+=================
+ALTER TABLE `stock_transfer_history` ADD po_product_id int(11) DEFAULT NULL;
+ALTER TABLE `stock_transfer` ADD `site_id` int(11) DEFAULT NULL;
+
+Moin 11/10/2018
+=================
+ALTER TABLE `medical_test_visit` ADD `supplier_id` INT(11) NULL, 
+ADD `lab_supplier_fees` INT(11) NULL;
+
+ALTER TABLE `medical_test` ADD `lab_supplier_fees` INT(11) NULL;
+
+ALTER TABLE `medical_test` ADD `container` VARCHAR(100) NULL;
+
+ALTER TABLE `medical_test_visit` ADD `container` VARCHAR(100) NULL;
+
+INSERT INTO valuelist (`key_text`, `value`, `creation_date`) VALUES
+('investigationsContainer', '1ml EDTA', NOW()),
+('investigationsContainer', '1ml Serum', NOW());
+
+ALTER TABLE `medical_test_in_patient` ADD `supplier_id` INT(11) NULL, 
+ADD `lab_supplier_fees` INT(11) NULL,
+ADD `container` VARCHAR(100) NULL;
+
+ALTER TABLE `medical_test_lab` ADD `supplier_id` INT(11) NULL, 
+ADD `lab_supplier_fees` INT(11) NULL,
+ADD `container` VARCHAR(100) NULL;
+
+ALTER TABLE `patient_visit` ADD `visited_by_referral_doctor` INT(1) NULL;
+ALTER TABLE `patient_visit` ADD `review_date` DATE NULL;
+
+Ansari 23/10/2018
+=================
+ALTER TABLE `product` ADD `add_syringe_in_pos` TINYINT(4) DEFAULT NULL;
+
+INSERT INTO setting (`key_text`, `value`, `description`, `value_type`, `creation_date`, `show_to_user`) VALUES
+('cp.clinicNamePDF', 'CRESENT MEDICALS - KURUKKUSALAI', 'Clinic Name', 'Text Field', NOW(), 1),
+('cp.prescriptionRegisterPDF', 'PRESCRIPTION REGISTER UNDER RULE 65 (3) & (9)', 'PRESCRIPTION REGISTER', 'Text Field', NOW(), 1);
+
+Mariyam 11/12/2018
+=================
+CREATE TABLE IF NOT EXISTS `mfrcompany_incentive` (
+`mfrcompany_incentive_id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+`medicine_company_id` int( 11 ) DEFAULT NULL ,
+`incentive` int( 11 ) DEFAULT NULL ,
+`incentive_date` date DEFAULT NULL ,
+`creation_date` datetime DEFAULT NULL ,
+`modification_date` datetime DEFAULT NULL ,
+`created_by` varchar( 200 ) DEFAULT NULL ,
+`modified_by` varchar( 200 ) DEFAULT NULL ,
+PRIMARY KEY ( `mfrcompany_incentive_id` )
+) ENGINE = MYISAM DEFAULT CHARSET = latin1 AUTO_INCREMENT =1;
+
+#========= SYED (16.01.2019) =========#
+ALTER TABLE `order` ADD `staff_id` INT(11) DEFAULT NULL;
+
+#========= ANSARI (13.02.2019) =========#
+CREATE TABLE `adjust_stock_log` (
+  `adjust_stock_log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `inventory_id` int(11) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
+  `adjust_stock` varchar(50) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `modified_by` varchar(100) DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`adjust_stock_log_id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+ALTER TABLE `adjust_stock_log` ADD `inventory_adjust_stock_id` int(11) DEFAULT NULL;
+ALTER TABLE `adjust_stock_log` ADD `batch_no` varchar(50) DEFAULT NULL;
+ALTER TABLE `adjust_stock_log` ADD `po_product_id` int(11) DEFAULT NULL;
+
+CREATE TABLE `inventory_batchwise_stock` (
+  `inventory_batchwise_stock_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `po_product_id` int(11) DEFAULT NULL,
+  `purchase_order_id` int(11) DEFAULT NULL,
+  `batch_no` varchar(50) DEFAULT NULL,
+  `purchased_qty` varchar(50) DEFAULT NULL,
+  `sales_return_qty` varchar(50) DEFAULT NULL,
+  `sales_qty` varchar(50) DEFAULT NULL,
+  `stock_transfer_in` varchar(50) DEFAULT NULL,
+  `stock_transfer_out` varchar(50) DEFAULT NULL,
+  `adjust_stock` varchar(50) DEFAULT NULL,
+  `current_stock` varchar(50) DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modified_by` varchar(100) DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`inventory_batchwise_stock_id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+ALTER TABLE `inventory_batchwise_stock` ADD `site_id` int(11) DEFAULT NULL;
+ALTER TABLE `inventory_batchwise_stock` ADD `damaged_qty` varchar(50) DEFAULT NULL;
+ALTER TABLE `inventory_batchwise_stock` ADD `free_qty` varchar(50) DEFAULT NULL;
+ALTER TABLE `order_item` ADD `po_product_id` int(11) DEFAULT NULL;
+ALTER TABLE `adjust_stock_log` ADD `inventory_batchwise_stock_id` int(11) DEFAULT NULL;
+ALTER TABLE `inventory_batchwise_stock` ADD `stock_transfer_internal_in` varchar(50) DEFAULT NULL;
+ALTER TABLE `inventory_batchwise_stock` ADD `stock_transfer_internal_out` varchar(50) DEFAULT NULL;
+ALTER TABLE `stock_transfer_history` ADD `to_location` varchar(50) DEFAULT NULL;
+
+ALTER TABLE `inventory` ADD `casuality` varchar(50) DEFAULT NULL,
+ADD `nursing_station` varchar(50) DEFAULT NULL,
+ADD `used_for_patient` varchar(50) DEFAULT NULL,
+ADD `ot` varchar(50) DEFAULT NULL,
+ADD `icu` varchar(50) DEFAULT NULL;
+
+ALTER TABLE `inventory_batchwise_stock` ADD `casuality1` varchar(50) NULL DEFAULT '0',
+ADD `nursing_station1` varchar(50) NULL DEFAULT '0',
+ADD `used_for_patient1` varchar(50) NULL DEFAULT '0',
+ADD `ot1` varchar(50) NULL DEFAULT '0',
+ADD `icu1` varchar(50) NULL DEFAULT '0';
+
+ALTER TABLE `stock_transfer_history` ADD `from_location` varchar(50) DEFAULT NULL;
+ALTER TABLE `order_item` CHANGE `discount_percentage` `discount_percentage` DECIMAL(10,2) NULL DEFAULT '0'; 
+ALTER TABLE `order_item` CHANGE `discount_amount` `discount_amount` DECIMAL(10,2) NULL DEFAULT '0'; 
+ALTER TABLE `invoice` CHANGE `invoice_amount` `invoice_amount` FLOAT(10,2) NULL DEFAULT '0'; 
+ALTER TABLE `invoice_item` CHANGE `discount` `discount` INT(11) NULL DEFAULT '0'; 
+ALTER TABLE `invoice_item` CHANGE `discount_percentage` `discount_percentage` DECIMAL(10,2) NULL DEFAULT '0'; 
+ALTER TABLE `invoice_item` CHANGE `discount_amount` `discount_amount` DECIMAL(10,2) NULL DEFAULT '0'; 
+
+UPDATE `order_item` SET `discount_percentage` = '0.00'
+WHERE `discount_percentage` IS NULL;
+
+UPDATE `order_item` SET `discount_amount` = '0.00'
+WHERE `discount_percentage` IS NULL;
+
+UPDATE `invoice` SET `invoice_amount` = '0.00'
+WHERE `invoice_amount` IS NULL;
+
+UPDATE `invoice_item` SET `discount` = '0.00'
+WHERE `discount` IS NULL;
+
+UPDATE `invoice_item` SET `discount_percentage` = '0.00'
+WHERE `discount_percentage` IS NULL;
+
+UPDATE `invoice_item` SET `discount_amount` = '0.00'
+WHERE `discount_amount` IS NULL;
+
+ALTER TABLE `inventory` ADD `actual_stock1` DECIMAL(10,2) NULL DEFAULT '0';
+ALTER TABLE `inventory` ADD `actual_stock2` DECIMAL(10,2) NULL DEFAULT '0';
+ALTER TABLE `inventory` ADD `actual_stock3` DECIMAL(10,2) NULL DEFAULT '0';
+
+ALTER TABLE `product` ADD `qty_in_stock1` DECIMAL(10,2) NULL DEFAULT '0';
+ALTER TABLE `product` ADD `qty_in_stock2` DECIMAL(10,2) NULL DEFAULT '0';
+ALTER TABLE `product` ADD `qty_in_stock3` DECIMAL(10,2) NULL DEFAULT '0';
+
+#========= ANSARI (21.02.2019) =========#
+ALTER TABLE `stock_transfer` ADD `from_location_internal` varchar(50) DEFAULT NULL
+,ADD `to_location_internal` varchar(50) DEFAULT NULL;
+
+ALTER TABLE `stock_transfer` ADD `transfer_type` varchar(50) DEFAULT NULL;
+
+#========= ANSARI (22.02.2019) =========#
+DROP TABLE IF EXISTS `internal_location`;
+CREATE TABLE IF NOT EXISTS `internal_location` (
+  `internal_location_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `creation_date` date DEFAULT NULL,
+  `modification_date` date DEFAULT NULL,
+  `published` tinyint(1) DEFAULT NULL,
+  `flag` int(1) DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`internal_location_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `inventory` ADD `casuality2` varchar(50) NULL DEFAULT '0',
+ADD `nursing_station2` varchar(50) NULL DEFAULT '0',
+ADD `used_for_patient2` varchar(50) NULL DEFAULT '0',
+ADD `ot2` varchar(50) NULL DEFAULT '0',
+ADD `icu2` varchar(50) NULL DEFAULT '0';
+
+ALTER TABLE `inventory` ADD `casuality3` varchar(50) NULL DEFAULT '0',
+ADD `nursing_station3` varchar(50) NULL DEFAULT '0',
+ADD `used_for_patient3` varchar(50) NULL DEFAULT '0',
+ADD `ot3` varchar(50) NULL DEFAULT '0',
+ADD `icu3` varchar(50) NULL DEFAULT '0';
+
+ALTER TABLE `stock_transfer_history` ADD `from_location_internal` varchar(50) DEFAULT NULL
+,ADD `to_location_internal` varchar(50) DEFAULT NULL;
+
+INSERT INTO `internal_location` (`internal_location_id`, `title`, `creation_date`, `modification_date`, `published`, `flag`, `created_by`, `modified_by`) VALUES
+(1, 'Store', '2019-02-22', '2019-02-22', 1, NULL, 'Super Admin', 'Super Admin'),
+(2, 'Casuality', '2019-02-22', '2019-02-22', 1, NULL, 'Super Admin', 'Super Admin'),
+(3, 'Nursing Station', '2019-02-22', '2019-02-22', 1, NULL, 'Super Admin', 'Super Admin'),
+(4, 'Used For Patient', '2019-02-22', '2019-02-22', 1, NULL, 'Super Admin', 'Super Admin'),
+(5, 'OT', '2019-02-22', '2019-02-22', 1, NULL, 'Super Admin', 'Super Admin'),
+(6, 'ICU', '2019-02-22', '2019-02-22', 1, NULL, 'Super Admin', 'Super Admin');
+COMMIT;
+
+#========= ANSARI (26.02.2019) =========#
+ALTER TABLE `patient_information` ADD `blacklist` tinyint(4) DEFAULT NULL;
+
+#========= ANSARI (22.03.2019) =========#
+ALTER TABLE `inventory_batchwise_stock` ADD `status` varchar(100) DEFAULT NULL;
+ALTER TABLE `inventory_batchwise_stock` ADD `cancelled_qty` varchar(50) DEFAULT NULL;
+
+#========= ANSARI (18.07.2019) =========#
+ALTER TABLE `in_patient` ADD `advance_payment` decimal(10,2) DEFAULT NULL;
+ALTER TABLE `in_patient` ADD `asst_surgeon_fees` decimal(10,2) DEFAULT NULL;
+
+#========= ANSARI (19.07.2019) =========#
+ALTER TABLE `in_patient` ADD `ot_staff` varchar(100) DEFAULT NULL;
+ALTER TABLE `in_patient` ADD `ot_charges` decimal(10,2) DEFAULT NULL;
+
+#========= MOIN (11.10.2019) =========#
+CREATE INDEX index_order_id ON order_item (order_id);
+
+#========= MOIN (11.12.2019) =========#
+CREATE TABLE IF NOT EXISTS `overall_stats` (
+  `overall_stats_id` int(11) NOT NULL AUTO_INCREMENT,
+  `op_cs` int(11) DEFAULT NULL,
+  `op_amt` float(10,2) DEFAULT NULL,
+  `ip_cs` int(11) DEFAULT NULL,
+  `ip_amt` float(10,2) DEFAULT NULL,
+  `dr_case` int(11) DEFAULT NULL,
+  `staff_cs` int(11) DEFAULT NULL,
+  `theatre_amt` float(10,2) DEFAULT NULL,
+  `lab_amt` float(10,2) DEFAULT NULL,
+  `pharm_amt` float(10,2) DEFAULT NULL,
+  `exp_total` float(10,2) DEFAULT NULL,
+  `profit` float(10,2) DEFAULT NULL,
+  `month` varchar(50) DEFAULT NULL,
+  `year` varchar(50) DEFAULT NULL,
+  `creation_date` date DEFAULT NULL,
+  `modification_date` date DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`overall_stats_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `patient_information` ADD `diabetes` TINYINT(4) NULL; 
+
+ALTER TABLE `overall_stats` ADD `theatre_cs` int(11) DEFAULT NULL; 
+ALTER TABLE `overall_stats` ADD `site_id` int(11) DEFAULT NULL; 
+ALTER TABLE `overall_stats` ADD `total` float(10,2) DEFAULT NULL; 
+
+ALTER TABLE `medicine_site` ADD `rack_qty` int(11) DEFAULT NULL; 
+
+ALTER TABLE `medicine_company` ADD `manager_name` VARCHAR(100) NULL,
+ADD `rep_name` VARCHAR(100) NULL;
+
+#========= MOIN (30.09.2020) =========#
+CREATE TABLE IF NOT EXISTS `manual_stock` (
+  `manual_stock_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `time` time DEFAULT NULL,
+  `stock` varchar(50) DEFAULT NULL,
+  `site_id` int(11) DEFAULT NULL,
+  `creation_date` date DEFAULT NULL,
+  `modification_date` date DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`manual_stock_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `manual_stock` ADD `actual_stock` VARCHAR(50) NULL AFTER `site_id`; 
+
+#========= ANSARI (14.10.2020) =========#
+ALTER TABLE `inventory` ADD `expired_stock1` VARCHAR(50) DEFAULT NULL
+,ADD `expired_stock2` VARCHAR(50) DEFAULT NULL
+,ADD `expired_stock3` VARCHAR(50) DEFAULT NULL;
+
+DROP TABLE IF EXISTS `expired_stock_log`;
+CREATE TABLE IF NOT EXISTS `expired_stock_log` (
+  `expired_stock_log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `inventory_id` int(11) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
+  `expired_stock` varchar(50) DEFAULT NULL,
+  `site_id` int(11) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `modified_by` varchar(100) DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`expired_stock_log_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+#========= MOIN (16.10.2020) =========#
+ALTER TABLE `manual_stock` ADD `stock_difference` VARCHAR(50) NULL;
+
+CREATE TABLE IF NOT EXISTS `stock_history_patient` (
+  `stock_history_patient_id` int(11) NOT NULL AUTO_INCREMENT,
+  `in_patient_id` int(11) DEFAULT NULL,
+  `patient_visit_id` int(11) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `patient_information_id` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `po_product_id` int(11) DEFAULT NULL,
+  `batch_no` varchar(150) DEFAULT NULL,
+  `stock_transfer_id` int(11) DEFAULT NULL,
+  `stock_transfer_history_id` int(11) DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modified_by` varchar(100) DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`stock_history_patient_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+#========= ANSARI (05.11.2020) =========#
+ALTER TABLE `product` ADD `exclude_stock_difference` TINYINT(4) DEFAULT NULL;
+
+#========= ANSARI (06.11.2020) =========#
+ALTER TABLE `po_product` ADD `return_qty` int(11) DEFAULT NULL;
+
+CREATE TABLE `return_qty_log` (
+  `return_qty_log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `po_product_id` int(11) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
+  `return_qty` int(11) DEFAULT NULL,
+  `purchase_order_id` int(11) DEFAULT NULL,
+  `site_id` int(11) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `modified_by` varchar(100) DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`return_qty_log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+#========= ANSARI (23.11.2020) =========#
+ALTER TABLE `adjust_stock_log` ADD `current_stock` INT(11) DEFAULT NULL;
+
+#========= ANSARI (08.12.2020) =========#
+ALTER TABLE `purchase_order` ADD `price_varied` tinyint(4) DEFAULT NULL;
+ALTER TABLE `po_product` ADD `price_varied` tinyint(4) DEFAULT NULL;
+
+#========= ANSARI (10.12.2020) =========#
+ALTER TABLE `user_group` ADD `user_group_type` varchar(50) DEFAULT NULL;
+ALTER TABLE `user_group` ADD `creation_date` datetime  DEFAULT NULL;
+ALTER TABLE `user_group` ADD `modification_date` datetime DEFAULT NULL;
+ALTER TABLE `mod_acc_room` ADD `room_type` varchar(100) DEFAULT NULL;
+UPDATE `mod_acc_room` SET room_type='module' WHERE room_type IS NULL;
+
+#========= SYED (26.12.2020) =========#
+ALTER TABLE `po_product` ADD `return_qty_ns` int(11) DEFAULT NULL;
+ALTER TABLE `po_product` ADD `return_qty_ns_paid` TINYINT(4) DEFAULT NULL;
+
+#========= FATHIMA (09.01.2021) =========#
+ALTER TABLE `order` ADD `counter` INT(1) NULL AFTER `staff_id`;
+
+#========= FATHIMA (28.01.2021) =========#
+CREATE TABLE IF NOT EXISTS `pharmacy_daily_sales_history` (
+  `pharmacy_daily_sales_history_id` int(11) NOT NULL    AUTO_INCREMENT,
+  `pharma_daily_sales_id` int(11) DEFAULT NULL,
+  `time_in` time DEFAULT NULL,
+  `time_out` time DEFAULT NULL,
+  `amount` float(10,2) DEFAULT NULL,
+  `excess_amount` float(10,2) DEFAULT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`pharmacy_daily_sales_history_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+#========= MOIN (16.01.2021) =========#
+ALTER TABLE `inventory` ADD `med_purch_qty` decimal(10,2) NULL;
+
+#========= SYED (20.01.2021) =========#
+ALTER TABLE `purchase_order` CHANGE `buy_currency` `purchase_return` DECIMAL(10,2) NULL DEFAULT NULL;
+
+#========= MOIN (01.02.2021) =========#
+ALTER TABLE `inventory` ADD `flag1` TINYINT(4) NULL,
+ADD `flag2` TINYINT(4) NULL,
+ADD `flag3` TINYINT(4) NULL; 
+
+ALTER TABLE `inventory` ADD `med_purch_qty1` decimal(10,2) NULL;
+ALTER TABLE `inventory` ADD `med_purch_qty2` decimal(10,2) NULL;
+ALTER TABLE `inventory` ADD `med_purch_qty3` decimal(10,2) NULL;
+
+ALTER TABLE `stock_transfer_history` ADD `expiry_date` DATE NULL; 
+ALTER TABLE `po_product` ADD `cost_price_varied` TINYINT(4) NULL; 
+
+ALTER TABLE `inventory` ADD `minimum_order_level2` INT(11) NULL, 
+ADD `minimum_order_level3` INT(11) NULL; 
+
+ALTER TABLE `inventory` CHANGE `minimum_order_level` `minimum_order_level1` INT(11) NULL DEFAULT NULL; 
+
+ALTER TABLE `patient_visit` ADD `partially_purchased` INT(1) NULL AFTER `review_date`, 
+ADD `not_purchased` INT(1) NULL AFTER `partially_purchased`;
+
+#========= ANSARI (25.02.2021) =========#
+ALTER TABLE `inventory` ADD `exp_qty1` int(11) DEFAULT NULL;
+ALTER TABLE `inventory` ADD `exp_qty2` int(11) DEFAULT NULL;
+ALTER TABLE `inventory` ADD `exp_qty3` int(11) DEFAULT NULL;
+
+#========= MOIN (03.05.2021) =========#
+ALTER TABLE `patient_visit` ADD `spo2` VARCHAR(50) NULL; 
+
+ALTER TABLE `in_patient` ADD `oxygen_fees` DECIMAL(10,2) NULL,
+ADD `medicine_fees` DECIMAL(10,2) NULL;
+
+ALTER TABLE `attendance` ADD `time_in_extra_shift` TIME NULL, 
+ADD `leave_time_extra_shift` TIME NULL ; 
+
+ALTER TABLE `attendance` ADD `shoes` VARCHAR(50) NULL, 
+ADD `badge` VARCHAR(50) NULL , 
+ADD `dress` VARCHAR(50) NULL ;
+
+#========= MOIN (20.01.2022) =========#
+ALTER TABLE `adjust_stock_log` ADD `actual_stock` INT(11) NULL; 
+#========= FATHIMA (4.02.2022) =========#
+ALTER TABLE `patient_visit` ADD `pur_medicine` varchar( 200 ) NULL ;
+
+ALTER TABLE `patient_visit` ADD `patient_not_willing` INT(1) NULL ; 
+
+ALTER TABLE `patient_visit` ADD `advised_ct_scan` INT(1) NULL ; 
+ALTER TABLE `patient_visit` ADD `advised_usg` INT(1) NULL ; 
+ALTER TABLE `patient_visit` ADD `advised_blood_investigation` INT(1) NULL ; 
+
+ALTER TABLE `patient_visit` ADD `report_received` INT(1) NULL ; 
+ALTER TABLE `lab_test` ADD `report_received` INT(1) NULL ; 

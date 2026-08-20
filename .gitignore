@@ -1,0 +1,21 @@
+# Production configuration
+conf.php
+
+# Logs
+*.log
+cp-log/
+
+# Archives/backups
+*.zip
+*.tar
+*.gz
+
+# Environment files
+.env
+.env.*
+
+# Uploaded/generated content
+media/
+
+# SSL/domain verification files
+.well-known/
